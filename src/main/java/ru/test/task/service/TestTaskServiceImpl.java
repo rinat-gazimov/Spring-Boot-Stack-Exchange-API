@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.test.task.model.AnswersDTO;
@@ -38,7 +39,7 @@ public class TestTaskServiceImpl implements TestTaskService {
         List<ResponseDTO> responses = null;
         try {
             items = restTemplate.getForObject(builder.toUriString(), AnswersDTO.class);
-        } catch (Exception e) {
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
 

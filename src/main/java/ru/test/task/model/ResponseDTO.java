@@ -17,13 +17,9 @@ public class ResponseDTO {
     private String title;
     private String userLink;
     private Boolean answered;
+    private String ownerName;
+    private String link;
 
-
-    public ResponseDTO(Date queryDate, String title, String userLink) {
-        this.queryDate = queryDate;
-        this.title = title;
-        this.userLink = userLink;
-    }
 
     public ResponseDTO(AnswerDTO answerDTO) {
 
@@ -31,7 +27,8 @@ public class ResponseDTO {
         this.title = answerDTO.getTitle();
         this.userLink = answerDTO.getOwner().getLink();
         this.answered = Boolean.valueOf(answerDTO.getIs_answered());
-
+        this.ownerName = answerDTO.getOwner().getDisplay_name();
+        this.link = answerDTO.getLink();
     }
 
 

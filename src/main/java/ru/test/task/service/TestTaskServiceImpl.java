@@ -5,6 +5,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +14,7 @@ import ru.test.task.model.AnswersDTO;
 import ru.test.task.model.ResponseDTO;
 import ru.test.task.model.ResponsesDTO;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +42,7 @@ public class TestTaskServiceImpl implements TestTaskService {
         try {
             items = restTemplate.getForObject(builder.toUriString(), AnswersDTO.class);
         } catch (HttpClientErrorException e) {
-            e.printStackTrace();
+            throw new HttpClientErrorException(e.getStatusCode());
         }
 
         if (items != null) {

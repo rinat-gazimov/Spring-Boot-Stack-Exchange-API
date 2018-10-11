@@ -1,6 +1,5 @@
 package ru.test.task.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,6 @@ import java.util.Date;
 public class ResponseDTO {
 
     @JsonSerialize(using = JsonDateSerializer.class, include=JsonSerialize.Inclusion.ALWAYS)
-    @JsonDeserialize(using = JsonDateDeserializer.class)
     private Date queryDate;
     private String title;
     private String userLink;

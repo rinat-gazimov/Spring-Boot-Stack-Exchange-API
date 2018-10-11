@@ -15,6 +15,7 @@ import ru.test.task.model.ResponseDTO;
 import ru.test.task.model.ResponsesDTO;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,17 +31,24 @@ public class TestTaskServiceImpl implements TestTaskService {
     @Override
     public ResponsesDTO getAnswers(String intitle) {
 
-        UriComponentsBuilder builder = UriComponentsBuilder
-                .fromUriString("http://api.stackexchange.com/2.2/search")
-                .queryParam("order", "desc")
-                .queryParam("sort", "activity")
-                .queryParam("intitle", intitle)
-                .queryParam("site", "stackoverflow");
+        String url = "http://api.stackexchange.com/2.2/search?" +
+                "order={order}&" +
+                "sort={sort}&" +
+                "site={site}&" +
+                "intitle={intitle}";
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("order", "desc");
+        params.put("sort", "activity");
+        params.put("intitle", intitle);
+        params.put("site", "stackoverflow");
+
 
         AnswersDTO items = null;
         List<ResponseDTO> responses = null;
         try {
-            items = restTemplate.getForObject(builder.toUriString(), AnswersDTO.class);
+            items = restTemplate.getForObject(url, AnswersDTO.class, params);
+
         } catch (HttpClientErrorException e) {
             throw new HttpClientErrorException(e.getStatusCode());
         }
